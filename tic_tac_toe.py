@@ -42,7 +42,7 @@ class TicTacToe:
         """Returns a valid move from the passed list on the passed board.
         Returns None if there is no valid move.
         """
-        possible_moves = deepcopy(self.board.board)
+        possible_moves = [i for i in moves]
         return choice(possible_moves) if len(possible_moves) != 0 else None
 
     def computer_move(self, player_letter, computer_letter):
@@ -50,7 +50,7 @@ class TicTacToe:
         letter, determine where to move to and the computer's
         letter is placed on the board in the determined position.
         """
-        board_copy = [i for i in self.board.board]
+        board_copy = deepcopy(self.board.board)
         corners = (0, 2, 6, 8)
         sides = (1, 3, 5, 7)
         # First, check if we can win in the next move.
