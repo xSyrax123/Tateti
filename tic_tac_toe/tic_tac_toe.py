@@ -1,7 +1,5 @@
 from board import Board
 from fields import Fields
-from field_is_occupied import FieldIsOccupied
-from invalid_input import InvalidInput
 from copy import deepcopy
 from random import choice
 
@@ -94,9 +92,9 @@ class TicTacToe:
             try:
                 move = int(input(f"It's your turn {letter}. Enter a number [1-9]: ")) - 1
                 if not 0 <= move <= 8:
-                    raise InvalidInput("The number entered is invalid. Enter a number between 1 and 9.")
+                    print(f"The number entered is invalid. Enter a number between 1 and 9.\n\n{self.SPACER}\n")
                 elif self.board.board[move] != Fields.FIELD_EMPTY.value:
-                    raise FieldIsOccupied("This field is already occupied.")
+                    print(f"This field is already occupied.\n\n{self.SPACER}\n")
                 else:
                     self.board.board[move] = letter
                     break
@@ -123,12 +121,10 @@ class TicTacToe:
             first_player = False if first_player else True
 
             if self.board.check_win(self.board.board, human):           
-                print("\nYou won!")
-                print("Thanks for playing!")
+                print("\nYou won!\nThanks for playing!")
                 break
             elif self.board.check_win(self.board.board, computer):
-                print("\nComputer won!")
-                print("Thanks for playing!")
+                print("\nComputer won!\nThanks for playing!")
                 break
         else:
             print("\nNobody won, it's a tie.")
