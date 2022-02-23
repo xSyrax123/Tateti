@@ -1,6 +1,7 @@
 from board import *
 from field_is_occupied import *
 from invalid_input import *
+from copy import deepcopy
 from random import choice
 
 
@@ -41,7 +42,7 @@ class TicTacToe:
         """Returns a valid move from the passed list on the passed board.
         Returns None if there is no valid move.
         """
-        possible_moves = [i for i in moves]
+        possible_moves = deepcopy(self.board.board)
         return choice(possible_moves) if len(possible_moves) != 0 else None
 
     def computer_move(self, player_letter, computer_letter):
@@ -75,7 +76,7 @@ class TicTacToe:
             return
 
         # Try to take the center, if it's free.
-        if Board.board[4] == Fields.FIELD_EMPTY.value:
+        if self.board.board[4] == Fields.FIELD_EMPTY.value:
             self.board.board[4] = computer_letter
             return
 
@@ -93,7 +94,7 @@ class TicTacToe:
                 move = int(input(f"It's your turn {letter}. Enter a number [1-9]: ")) - 1
                 if not 0 <= move <= 8:
                     raise InvalidInput("The number entered is invalid. Enter a number between 1 and 9.")
-                elif Board.board[move] != Fields.FIELD_EMPTY.value:
+                elif self.board.board[move] != Fields.FIELD_EMPTY.value:
                     raise FieldIsOccupied("This field is already occupied.")
                 else:
                     self.board.board[move] = letter
