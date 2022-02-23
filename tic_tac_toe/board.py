@@ -32,7 +32,6 @@ class Board:
     def board(self, board):
         self._board = board
         
-    @property
     def board_full(self):
         """Return True if every space on the board
         has been taken. Otherwise return False.
