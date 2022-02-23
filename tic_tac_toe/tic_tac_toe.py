@@ -108,7 +108,7 @@ class TicTacToe:
         first_player = self.human_goes_first
         print(f"\n{self.SPACER}")
 
-        while not self.board.board_full:
+        while not self.board.board_full():
             if first_player:
                 print(f"\nNow playing: Human ({human})")
                 self.player_move(human)
