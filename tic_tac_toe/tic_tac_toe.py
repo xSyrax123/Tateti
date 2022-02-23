@@ -1,6 +1,7 @@
-from board import *
-from field_is_occupied import *
-from invalid_input import *
+from board import Board
+from fields import Fields
+from field_is_occupied import FieldIsOccupied
+from invalid_input import InvalidInput
 from copy import deepcopy
 from random import choice
 
