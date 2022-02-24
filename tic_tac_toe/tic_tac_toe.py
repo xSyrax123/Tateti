@@ -1,5 +1,6 @@
 from board import Board
 from constants import FIELD_X, FIELD_O, FIELD_EMPTY, SPACER
+from collections import deque
 from copy import deepcopy
 from random import choice
 
@@ -98,25 +99,28 @@ class TicTacToe:
         print("Welcome to Tic Tac Toe!")
         human_letter, cpu_letter = self.select_letter()
         first_player = self.human_goes_first()
+        letters = deque((human_letter, cpu_letter) if first_player else (cpu_letter, human_letter))
+        players = deque(("Human", "Computer") if first_player else ("Computer", "Human"))
         print(f"\n{SPACER}")
 
         while not self.board.board_full():
-            if first_player:
-                print(f"\nNow playing: Human ({human_letter})")
+            current_letter = letters[0]
+            current_player = players[0]
+            print(f"\nNow playing: {current_player} ({current_letter})")
+
+            if current_letter == human_letter:
                 self.player_move(human_letter)
             else:
-                print(f"\nNow playing: Computer ({cpu_letter})")
-                self.computer_move(human_letter, cpu_letter)
-            
-            print(f"\n{self.board}\n\n{SPACER}")
-            first_player = False if first_player else True
+                self.computer_move(human_letter, cpu_letter) 
 
-            if self.board.check_win(self.board.board, human_letter):           
-                print("\nYou won!\nThanks for playing!")
+            print(f"\n{self.board}\n\n{SPACER}")
+            
+            if self.board.check_win(self.board.board, current_letter):           
+                print(f"\n{current_player} won!\nThanks for playing!")
                 break
-            elif self.board.check_win(self.board.board, cpu_letter):
-                print("\nComputer won!\nThanks for playing!")
-                break
+
+            letters.rotate()
+            players.rotate()
         else:
             print("\nNobody won, it's a tie.")
 
