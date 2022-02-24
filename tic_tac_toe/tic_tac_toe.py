@@ -1,5 +1,4 @@
 from board import Board
-from fields import Fields
 from copy import deepcopy
 from random import choice
 
