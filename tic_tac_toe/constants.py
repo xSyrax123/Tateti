@@ -1,4 +1,5 @@
-FIELDS_X_O = ("X", "O")
+FIELD_X = "X"
+FIELD_O = "O"
 FIELD_EMPTY = " "
 SPACER = "-" * 50
 WAYS_TO_WIN = (
