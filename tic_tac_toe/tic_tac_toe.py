@@ -4,31 +4,27 @@ from random import choice
 
 
 class TicTacToe:
-    SPACER = "-" * 50
-
     def __init__(self):
         self.board = Board()
 
-    @property
     def select_letter(self):
         """Returns a tuple with the letter chosen by the player and the one chosen by the computer."""
-        computer_letter = None
-        player_letter = None
+        cpu_letter = None
+        human_letter = None
 
         while True:
-            player_letter = input("Choose your side: ").upper()
+            human_letter = input("Choose your side: ").upper()
 
-            if player_letter not in Fields.FIELDS_X_O.value:
+            if human_letter not in FIELDS_X_O:
                 print("You can only choose X or O.")
             else:
                 break
 
-        computer_letter = "O" if player_letter == "X" else "X"
-        print(f"The computer has chosen to be {computer_letter}.")
-        print(f"You will be {player_letter}.")
-        return player_letter, computer_letter
+        cpu_letter = "O" if player_letter == "X" else "X"
+        print(f"The computer has chosen to be {cpu_letter}.")
+        print(f"You will be {human_letter}.")
+        return human_letter, cpu_letter
 
-    @property
     def human_goes_first(self):
         """Returns True if human chooses "yes" else False."""
         go_first = None
@@ -43,7 +39,7 @@ class TicTacToe:
         possible_moves = [i for i in moves]
         return choice(possible_moves) if len(possible_moves) != 0 else None
 
-    def computer_move(self, player_letter, computer_letter):
+    def computer_move(self, human_letter, cpu_letter):
         """Given a board, the player's letter and the computer's
         letter, determine where to move to and the computer's
         letter is placed on the board in the determined position.
@@ -53,34 +49,34 @@ class TicTacToe:
         sides = (1, 3, 5, 7)
         # First, check if we can win in the next move.
         for i in range(8):
-            if board_copy[i] == Fields.FIELD_EMPTY.value:
-                board_copy[i] = computer_letter
-                if self.board.check_win(board_copy, computer_letter):
-                    self.board.board[i] = computer_letter
+            if board_copy[i] == FIELD_EMPTY:
+                board_copy[i] = cpu_letter
+                if self.board.check_win(board_copy, cpu_letter):
+                    self.board.board[i] = cpu_letter
                     return
 
         # Check if the player could win on their next move, and block them.
         for i in range(8):
-            if board_copy[i] == Fields.FIELD_EMPTY.value:
-                board_copy[i] = player_letter
-                if self.board.check_win(board_copy, player_letter):
-                    self.board.board[i] = computer_letter
+            if board_copy[i] == FIELD_EMPTY:
+                board_copy[i] = human_letter
+                if self.board.check_win(board_copy, human_letter):
+                    self.board.board[i] = cpu_letter
                     return
 
         # Try to take one of the corners, if they are free.
         move = self.get_random_move(corners)
         if move:
-            self.board.board[move] = computer_letter
+            self.board.board[move] = cpu_letter
             return
 
         # Try to take the center, if it's free.
-        if self.board.board[4] == Fields.FIELD_EMPTY.value:
-            self.board.board[4] = computer_letter
+        if self.board.board[4] == FIELD_EMPTY:
+            self.board.board[4] = cpu_letter
             return
 
         # Move on one of the sides.
         move = self.get_random_move(sides)
-        self.board.board[move] = computer_letter
+        self.board.board[move] = cpu_letter
 
     def player_move(self, letter):
         """The player chooses the position on the
@@ -91,38 +87,38 @@ class TicTacToe:
             try:
                 move = int(input(f"It's your turn {letter}. Enter a number [1-9]: ")) - 1
                 if not 0 <= move <= 8:
-                    print(f"The number entered is invalid. Enter a number between 1 and 9.\n\n{self.SPACER}\n")
-                elif self.board.board[move] != Fields.FIELD_EMPTY.value:
-                    print(f"This field is already occupied.\n\n{self.SPACER}\n")
+                    print(f"The number entered is invalid. Enter a number between 1 and 9.\n\n{SPACER}\n")
+                elif self.board.board[move] != FIELD_EMPTY:
+                    print(f"This field is already occupied.\n\n{SPACER}\n")
                 else:
                     self.board.board[move] = letter
                     break
             except ValueError:
-                print(f"Enter a number!\n\n{self.SPACER}\n")
+                print(f"Enter a number!\n\n{SPACER}\n")
 
     def play(self):
         """The game stage."""
         print("Welcome to Tic Tac Toe!")
-        human, computer = self.select_letter
-        first_player = self.human_goes_first
-        print(f"\n{self.SPACER}")
+        human_letter, cpu_letter = self.select_letter()
+        first_player = self.human_goes_first()
+        print(f"\n{SPACER}")
 
         while not self.board.board_full():
             if first_player:
-                print(f"\nNow playing: Human ({human})")
-                self.player_move(human)
+                print(f"\nNow playing: Human ({human_letter})")
+                self.player_move(human_letter)
             else:
-                print(f"\nNow playing: Computer ({computer})")
-                self.computer_move(human, computer)
+                print(f"\nNow playing: Computer ({cpu_letter})")
+                self.computer_move(human_letter, cpu_letter)
             
             print(f"\n{self.board}")
-            print(f"\n{self.SPACER}")
+            print(f"\n{SPACER}")
             first_player = False if first_player else True
 
-            if self.board.check_win(self.board.board, human):           
+            if self.board.check_win(self.board.board, human_letter):           
                 print("\nYou won!\nThanks for playing!")
                 break
-            elif self.board.check_win(self.board.board, computer):
+            elif self.board.check_win(self.board.board, cpu_letter):
                 print("\nComputer won!\nThanks for playing!")
                 break
         else:
