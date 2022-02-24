@@ -123,12 +123,3 @@ class TicTacToe:
             players.rotate()
         else:
             print("\nNobody won, it's a tie.")
-
-
-def main():
-    game = TicTacToe()
-    game.play()
-
-
-if __name__ == '__main__':
-    main()
