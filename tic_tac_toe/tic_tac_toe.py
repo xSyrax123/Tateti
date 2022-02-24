@@ -36,8 +36,7 @@ class TicTacToe:
     def get_random_move(self, moves):
         """Returns a valid move from the passed list on the passed board.
         Returns None if there is no valid move."""
-        possible_moves = [i for i in moves]
-        return choice(possible_moves) if len(possible_moves) != 0 else None
+        return choice(moves) if len(moves) != 0 else None
 
     def computer_move(self, human_letter, cpu_letter):
         """Given a board, the player's letter and the computer's
