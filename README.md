@@ -1,1 +1,1 @@
-# Tateti
+# Tic Tac Toe
