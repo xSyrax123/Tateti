@@ -1,4 +1,5 @@
 from board import Board
+from constants import FIELD_X, FIELD_O, FIELD_EMPTY
 from copy import deepcopy
 from random import choice
 
@@ -15,12 +16,12 @@ class TicTacToe:
         while True:
             human_letter = input("Choose your side: ").upper()
 
-            if human_letter not in FIELDS_X_O:
+            if human_letter not in (FIELD_X, FIELD_O):
                 print("You can only choose X or O.")
             else:
                 break
 
-        cpu_letter = "O" if player_letter == "X" else "X"
+        cpu_letter = FIELD_O if player_letter == FIELD_X else FIELD_X
         print(f"The computer has chosen to be {cpu_letter}.")
         print(f"You will be {human_letter}.")
         return human_letter, cpu_letter
@@ -34,16 +35,14 @@ class TicTacToe:
 
     def get_random_move(self, moves):
         """Returns a valid move from the passed list on the passed board.
-        Returns None if there is no valid move.
-        """
+        Returns None if there is no valid move."""
         possible_moves = [i for i in moves]
         return choice(possible_moves) if len(possible_moves) != 0 else None
 
     def computer_move(self, human_letter, cpu_letter):
         """Given a board, the player's letter and the computer's
         letter, determine where to move to and the computer's
-        letter is placed on the board in the determined position.
-        """
+        letter is placed on the board in the determined position."""
         board_copy = deepcopy(self.board.board)
         corners = (0, 2, 6, 8)
         sides = (1, 3, 5, 7)
@@ -81,8 +80,7 @@ class TicTacToe:
     def player_move(self, letter):
         """The player chooses the position on the
          board and the player's letter is placed
-         on the board at the entered position.
-        """
+         on the board at the entered position."""
         while True:
             try:
                 move = int(input(f"It's your turn {letter}. Enter a number [1-9]: ")) - 1
@@ -111,8 +109,7 @@ class TicTacToe:
                 print(f"\nNow playing: Computer ({cpu_letter})")
                 self.computer_move(human_letter, cpu_letter)
             
-            print(f"\n{self.board}")
-            print(f"\n{SPACER}")
+            print(f"\n{self.board}\n\n{SPACER}")
             first_player = False if first_player else True
 
             if self.board.check_win(self.board.board, human_letter):           
