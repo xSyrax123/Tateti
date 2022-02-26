@@ -8,24 +8,27 @@ from random import choice
 class TicTacToe:
     def __init__(self):
         self.board = Board()
+        
+    def get_reply(self, prompt, choices, convert=None):
+        # Prepare the conversion function.
+        identity = lambda x: x
+        convert = convert or identity
+
+        # Return the first valid reply.
+        while True:
+            reply = input(f"{prompt} ({choices[0]}/{choices[1]}): ").upper()
+            val = convert(reply)
+            if val in choices:
+                return val
 
     def select_letter(self):
-        """Returns a tuple with the letter chosen by the player and the one chosen by the computer."""
-        cpu_letter = None
-        human_letter = None
-
-        while True:
-            human_letter = input("Choose your side: ").upper()
-
-            if human_letter not in (FIELD_X, FIELD_O):
-                print("You can only choose X or O.")
-            else:
-                break
-
-        cpu_letter = FIELD_O if human_letter == FIELD_X else FIELD_X
-        print(f"The computer has chosen to be {cpu_letter}.")
-        print(f"You will be {human_letter}.")
-        return human_letter, cpu_letter
+        """Returns a tuple with the letter chosen by
+        the player and the one chosen by the computer."""
+        letters = [FIELD_X, FIELD_O]
+        if self.get_reply("Choose your side", letters) == FIELD_O:
+            letters.reverse()
+        print("You will be {}.\n The computer will be {}.".format(*letters))
+        return letters
 
     def human_goes_first(self):
         """Returns True if human chooses "yes" else False."""
@@ -97,29 +100,27 @@ class TicTacToe:
     def play(self):
         """The game stage."""
         print("Welcome to Tic Tac Toe!")
-        human_letter, cpu_letter = self.select_letter()
-        first_player = self.human_goes_first()
-        letters = deque((human_letter, cpu_letter) if first_player else (cpu_letter, human_letter))
-        players = deque(("Human", "Computer") if first_player else ("Computer", "Human"))
-        print(f"\n{SPACER}")
+        letters = self.select_letter()
+        players = deque(zip(
+            letters,
+            ('Human', 'Computer'),
+            (self.player_move, self.computer_move),
+            (letters[0], letters)
+        ))
+
+        if not self.human_goes_first():
+            players.rotate()
 
         while not self.board.board_full():
-            current_letter = letters[0]
-            current_player = players[0]
-            print(f"\nNow playing: {current_player} ({current_letter})")
-
-            if current_letter == human_letter:
-                self.player_move(human_letter)
-            else:
-                self.computer_move(human_letter, cpu_letter) 
-
-            print(f"\n{self.board}\n\n{SPACER}")
+            letter, label, mover, move_args = players[0]
+            print(f"\n{SPACER}\nNow playing: {letter} ({label})")
+            mover(*move_args)
+            print(f"\n{self.board}\n")
             
-            if self.board.check_win(self.board.board, current_letter):           
-                print(f"\n{current_player} won!\nThanks for playing!")
-                break
+            if self.board.check_win(self.board.board, letter):           
+                print(f"{SPACER}\n\n{label} won!\nThanks for playing!")
+                return
 
-            letters.rotate()
             players.rotate()
         else:
             print("\nNobody won, it's a tie.")
