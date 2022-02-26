@@ -20,7 +20,7 @@ class TicTacToe:
             try:
                 reply = input(f"{prompt} ({choices_str}): ").upper()
                 val = convert(reply)
-                if reply in choices:
+                if val in choices:
                     return val
                 else:
                     print("Invalid reply.")
