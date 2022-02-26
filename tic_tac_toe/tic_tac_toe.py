@@ -39,7 +39,8 @@ class TicTacToe:
     def human_goes_first(self):
         """Returns True if human chooses "yes" else False."""
         go_first = None
-        while go_first not in ("yes", "no"):
+        YES_NO = ("yes", "no")
+        while go_first not in YES_NO:
             go_first = input(("Do you require the first move? (yes/no): ")).lower()
         return go_first == "yes"
 
