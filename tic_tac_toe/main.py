@@ -3,7 +3,7 @@ from tic_tac_toe import TicTacToe
 
 def main():
     game = TicTacToe()
-    game.play()
+    game.start()
 
 
 if __name__ == '__main__':
