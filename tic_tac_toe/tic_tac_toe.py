@@ -10,6 +10,7 @@ class TicTacToe:
         self.board = Board()
         
     def get_reply(self, prompt, choices):
+        """Given a question and the options, returns the answer given by the user."""
         while True:
             reply = input(f"{prompt} ({choices[0]}/{choices[1]}): ").upper()
             if reply in choices:
