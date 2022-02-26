@@ -3,7 +3,7 @@ from constants import FIELD_EMPTY, WAYS_TO_WIN
 
 class Board: 
     def __init__(self):
-        self._board = [FIELD_EMPTY] * 9
+        self.board = [FIELD_EMPTY] * 9
         
     def __str__(self):
         """Return a string with game board."""
