@@ -1,23 +1,14 @@
 from constants import FIELD_EMPTY, WAYS_TO_WIN
-from itertools import chain
 
 
 class Board: 
     def __init__(self):
-        self._board = [" "] * 9
+        self._board = [FIELD_EMPTY] * 9
         
     def __str__(self):
         """Return a string with game board."""
-        return "{}║{}║{}\n═╬═╬═\n{}║{}║{}\n═╬═╬═\n{}║{}║{}".format(*chain(self._board))
+        return "{}║{}║{}\n═╬═╬═\n{}║{}║{}\n═╬═╬═\n{}║{}║{}".format(*self.board)
 
-    @property
-    def board(self):
-        return self._board
-
-    @board.setter
-    def board(self, board):
-        self._board = board
-        
     def board_full(self):
         """Return True if every space on the board
         has been taken. Otherwise return False."""
