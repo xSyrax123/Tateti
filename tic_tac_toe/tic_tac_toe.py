@@ -76,7 +76,7 @@ class TicTacToe:
         while True:
             letter, label, mover, move_args = players[0]
             print(f"\n{SPACER}\nNow playing: {letter} ({label})")
-            mover(*move_args)
+            mover(move_args)
             print(f"\n{self.board}\n")
             
             if self.board.check_win():           
