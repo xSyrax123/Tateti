@@ -43,9 +43,9 @@ class TicTacToe:
             go_first = input(("Do you require the first move? (yes/no): ")).lower()
         return go_first == "yes"
 
-    def computer_move(self, human_letter, cpu_letter):
+    def computer_move(self, letter):
         spot = choice(self.board.open_spots())
-        self.board.play(cpu_letter, spot)
+        self.board.play(letter, spot)
 
     def player_move(self, letter):
         """The player chooses the position on the
@@ -67,7 +67,7 @@ class TicTacToe:
             letters,
             ("Human", "Computer"),
             (self.player_move, self.computer_move),
-            (letters[0], letters)
+            (letters[0], letters[0])
         ))
 
         if not self.human_goes_first():
