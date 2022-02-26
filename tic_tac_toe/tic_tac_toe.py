@@ -9,17 +9,11 @@ class TicTacToe:
     def __init__(self):
         self.board = Board()
         
-    def get_reply(self, prompt, choices, convert=None):
-        # Prepare the conversion function.
-        identity = lambda x: x
-        convert = convert or identity
-
-        # Return the first valid reply.
+    def get_reply(self, prompt, choices):
         while True:
             reply = input(f"{prompt} ({choices[0]}/{choices[1]}): ").upper()
-            val = convert(reply)
-            if val in choices:
-                return val
+            if reply in choices:
+                return reply
 
     def select_letter(self):
         """Returns a tuple with the letter chosen by
@@ -27,7 +21,7 @@ class TicTacToe:
         letters = [FIELD_X, FIELD_O]
         if self.get_reply("Choose your side", letters) == FIELD_O:
             letters.reverse()
-        print("You will be {}.\n The computer will be {}.".format(*letters))
+        print("You will be {}.\nThe computer will be {}.".format(*letters))
         return letters
 
     def human_goes_first(self):
