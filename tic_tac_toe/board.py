@@ -11,6 +11,7 @@ class Board:
         return "{}║{}║{}\n═╬═╬═\n{}║{}║{}\n═╬═╬═\n{}║{}║{}".format(*self.board)
 
     def check_win(self):
+        """Determine if a token/player meets victory conditions."""
         for letter in (FIELD_X, FIELD_O):
             victory = [letter, letter, letter]
             if any(self.board[s] == victory for s in WAYS_TO_WIN):
@@ -18,6 +19,7 @@ class Board:
         return None
 
     def open_spots(self):
+        """Return a list of all cell numbers/keys not occupied by any token."""
         return [i + 1 for i, cell in enumerate(self.board) if cell == FIELD_EMPTY]
 
     def play(self, letter, spot):
