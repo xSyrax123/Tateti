@@ -9,7 +9,7 @@ class TicTacToe:
         self.board = Board()
         
     def get_reply(self, prompt, choices, convert=None):
-        """Given a question and the choices, returns the answer given by the user."""
+        """Given a prompt and the choices, returns the answer given by the user."""
         # Prepare the conversion function.
         identity = lambda x: x
         convert = convert or identity
