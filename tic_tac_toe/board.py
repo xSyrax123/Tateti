@@ -4,6 +4,7 @@ from illegal_move import IllegalMove
 
 class Board: 
     def __init__(self):
+        """Initializes an empty board."""
         self.board = [FIELD_EMPTY] * 9
         
     def __str__(self):
