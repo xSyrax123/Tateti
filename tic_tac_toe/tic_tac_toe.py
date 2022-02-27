@@ -7,8 +7,9 @@ from random import choice
 class TicTacToe:
     def __init__(self):
         self.board = Board()
-        
-    def get_reply(self, prompt, choices, convert=None):
+    
+    @staticmethod
+    def get_reply(prompt, choices, convert=None):
         """Given a prompt and the choices, returns the answer given by the user."""
         # Prepare the conversion function.
         identity = lambda x: x
@@ -36,7 +37,8 @@ class TicTacToe:
         print("You will be {}.\nThe computer will be {}.".format(*letters))
         return letters
 
-    def human_goes_first(self):
+    @staticmethod
+    def human_goes_first():
         """Returns True if human chooses "yes" else False."""
         go_first = None
         YES_NO = ("yes", "no")
