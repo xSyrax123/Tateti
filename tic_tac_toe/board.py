@@ -23,7 +23,7 @@ class Board:
         return [i + 1 for i, cell in enumerate(self.board) if cell == FIELD_EMPTY]
 
     def play(self, letter, spot):
-        """Attempt to place a token on a cell. Raise exception if the cell is occupied."""
+        """Attempt to place a token on a cell. Raise exception if the cell is already occupied."""
         i = spot - 1
         if self.board[i] == FIELD_EMPTY:
             self.board[i] = letter
