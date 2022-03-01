@@ -16,7 +16,7 @@ class TicTacToe:
         convert = convert or identity
 
         # Return the first valid reply.
-        choices_str = "/".join(str(c) for c in choices)
+        choices_str = "/".join(str(i) for i in choices)
         while True:
             try:
                 reply = input(f"{prompt} ({choices_str}): ").upper()
